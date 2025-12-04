@@ -1,41 +1,48 @@
-# Análisis de Lealtad de Clientes de Aerolínea
+# ✈️ Análisis de Lealtad de Clientes de Aerolínea (EDA)
 
-Este proyecto analiza el comportamiento de los clientes de un programa de lealtad de una aerolínea para extraer información sobre sus actividades de vuelo y características demográficas.
+Este proyecto se centra en el Análisis Exploratorio de Datos (EDA) del comportamiento de los clientes de un programa de lealtad de una aerolínea. El objetivo es consolidar la información transaccional y demográfica para extraer insights clave sobre los patrones de vuelo, la segmentación de clientes y la relación entre la actividad y el nivel de lealtad.
 
-## Descripción
+# 📂 Conjuntos de Datos (Datasets)
 
-El objetivo de este proyecto es realizar un análisis exploratorio de datos (EDA) a partir de dos conjuntos de datos de clientes de una aerolínea. El análisis incluye la limpieza de los datos, el tratamiento de valores nulos y la creación de visualizaciones para responder a preguntas clave del negocio.
+Se trabajaron con dos archivos CSV, unidos mediante el identificador Loyalty Number:
 
-## Datos
+**Customer Loyalty History.csv**: Perfil demográfico del cliente (Salario, Educación, Estado Civil, Tipo de Tarjeta, CLV).
 
-Se utilizaron dos archivos CSV:
+**Customer Flight Analysis.csv**: Actividad de vuelo del cliente por mes (Vuelos Reservados, Distancia, Puntos Acumulados y Redimidos).
 
-*   `Customer Loyalty History.csv`: Contiene información demográfica de los clientes, como su ubicación, educación, ingresos y estado de su membresía.
-*   `Customer Flight Activity.csv`: Contiene información sobre la actividad de vuelo de los clientes, incluyendo vuelos, distancia, y puntos acumulados y redimidos.
+# 🛠️ Fase 1: Limpieza y Preparación de Datos (Criterios Clave)
 
-## Análisis Realizado
+El proceso de limpieza y gestión de nulos fue crítico para asegurar la calidad de los datos, cubriendo los siguientes puntos:
 
-El análisis se llevó a cabo en un Jupyter Notebook (`Eval_Mod03_MariaGomez.ipynb`) y se divide en las siguientes fases:
+**Unión de Datos**: Los dos datasets se unieron de forma eficiente mediante la columna Loyalty Number.
 
-### 1. Exploración y Limpieza de Datos
+**Gestión de Nulos**: Se trataron los valores nulos en las fechas de cancelación (cancellation year/month) asumiendo que representan clientes activos (imputados con valores sentinel como 9999 y 0).
 
-*   Se cargaron y exploraron los dos conjuntos de datos.
-*   Se unieron los datos en un único DataFrame.
-*   Se realizó una limpieza de datos que incluyó la corrección de valores negativos en salarios y la imputación de valores nulos.
-*   El dataset limpio se guardó en `df.csv`.
+**Corrección Salarial**: Se aplicó la función de valor absoluto (np.abs) a los salarios negativos, asumiendo un error de tipeo en la entrada de datos.
 
-### 2. Visualización
+**Imputación de Salario**: Se imputaron los salarios nulos restantes (ej., para la categoría 'College') utilizando la mediana condicional específica para cada nivel educativo.
 
-En el notebook `Visualizacion de archivo.ipynb` se generaron diversas visualizaciones para responder a preguntas como:
+**Estandarización**: Se aplicó el formato snake_case (flights_booked) a todas las columnas para mejorar la legibilidad del código.
 
-*   La distribución de vuelos a lo largo del año.
-*   La relación entre la distancia de vuelo y los puntos acumulados.
-*   La distribución demográfica de los clientes por provincia, estado civil y género.
-*   La relación entre el nivel educativo y el salario.
+# 📊 Fase 2: Visualización y Insights Clave
 
-## Cómo usar
+Utilizando visualizaciones con Matplotlib y Seaborn, se respondieron preguntas clave del negocio:
 
-Para replicar el análisis, se pueden ejecutar los Jupyter Notebooks en el siguiente orden:
+## 💡 Insights Obtenidos
 
-1.  `Eval_Mod03_MariaGomez.ipynb`: Para la limpieza y preparación de los datos.
-2.  `Visualizacion de archivo.ipynb`: Para generar las visualizaciones.
+**Distribución mensual de vuelos**: Se confirmó una fuerte estacionalidad, con picos de reservas en los meses de verano y diciembre. (Gráfico de Líneas).
+
+**Relación Distancia vs. Puntos**: Se observó una correlación positiva muy clara. El análisis segmentado demostró que la tasa de acumulación de puntos es directamente determinada por el tipo de tarjeta de fidelidad. (Gráfico de Dispersión).
+
+**Salario vs. Educación/Tarjeta**: Se confirmó que el salario promedio aumenta con el nivel educativo. Además, las tarjetas de nivel superior ('Gold', 'Platinum') están asociadas a un salario mediano significativamente mayor (demostrado con Boxplots). (Gráfico de Barras y Boxplot).
+
+**Proporción de Tarjetas**: La tarjeta 'Star' es la categoría más común en la base de clientes. (Gráfico de Tarta).
+
+**Distribución Geográfica**: Ontario es la provincia con la mayor concentración de clientes, lo que indica un mercado principal. (Gráfico de Barras).
+
+## 🎯 Criterios Adicionales
+**Legibilidad del Código**: Se priorizó el uso de código limpio y funciones vectorizadas de Pandas/NumPy.
+
+**Gestión de Git**: Se realizaron commits descriptivos a lo largo del proceso de EDA y visualización.
+
+**Archivos de Salida**: Se generó un DataFrame limpio (df.csv) para la fase de análisis
